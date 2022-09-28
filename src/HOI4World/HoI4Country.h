@@ -145,6 +145,8 @@ class Country
 	void setGreatPower() { greatPower = true; }
 	void setPuppetMaster(const std::shared_ptr<Country> master) { puppetMaster = master; }
 	void addPuppet(const std::shared_ptr<Country> puppet, const Regions& theRegions);
+	void setLastElection(const date& newDate) { lastElection = newDate; }
+	void setLastElection36(const date& newDate) { lastElection36 = newDate; }
 
 	void makeNavalTreatyAdherent() { navalTreatyAdherent = true; }
 	void makeGreatestNavalPower() { greatestNavalPower = true; }
@@ -229,6 +231,7 @@ class Country
 	[[nodiscard]] const std::set<Vic2::Party>& getParties() const { return parties; }
 	[[nodiscard]] const std::map<std::string, int>& getIdeologySupport() const { return ideologySupport; }
 	[[nodiscard]] const date& getLastElection() const { return lastElection; }
+	[[nodiscard]] const date& getLastElection36() const { return lastElection36; }
 	[[nodiscard]] int getStability() const { return stability; }
 	[[nodiscard]] int getWarSupport() const { return warSupport; }
 	[[nodiscard]] const std::string& getMobilizationLaw() const { return mobilizationLaw; }
@@ -349,6 +352,7 @@ class Country
 	void convertRelations(const Mappers::CountryMapper& countryMap,
 		 const Vic2::Country& sourceCountry,
 		 const date& startDate);
+	void determine36Elections();
 
 	bool attemptToPutCapitalInPreferredNonWastelandOwned(const Mappers::ProvinceMapper& theProvinceMapper,
 		 const std::map<int, int>& provinceToStateIDMap,
@@ -423,6 +427,7 @@ class Country
 	std::map<std::string, double> upperHouseComposition;
 	std::map<std::string, int> ideologySupport{std::make_pair("neutrality", 100)};
 	date lastElection;
+	date lastElection36;
 	int stability = 60;
 	int warSupport = 60;
 	std::string mobilizationLaw = "volunteer_only";
